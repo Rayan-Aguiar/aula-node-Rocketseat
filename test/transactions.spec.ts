@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
-import { it, beforeAll, afterAll, describe, expect } from 'vitest'
+import { it, beforeAll, afterAll, describe, expect, beforeEach } from 'vitest'
 import { app } from '../src/app'
 import request from 'supertest'
+import { execSync } from 'child_process'
 
 
 describe('Transaction routes', () =>{
@@ -12,6 +13,12 @@ describe('Transaction routes', () =>{
   afterAll ( async () =>{
       await app.close()
   })
+
+  beforeEach (async()=>{
+    execSync('npx knex migrate:rollback --all')
+    execSync('npx knex migrate:latest')
+  })
+
   it('should be able to create a new transaction', async () => {
     await request(app.server)
       .post('/transactions')
