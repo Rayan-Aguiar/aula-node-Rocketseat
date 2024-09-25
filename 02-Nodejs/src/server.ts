@@ -4,7 +4,8 @@ import { env } from './env'
 app
   .listen({
     port: env.PORT,
+    host: '0.0.0.0',
   })
   .then(() => {
-    console.log('Server running on port 3333')
+    console.log(`Server running on port ${env.PORT}`)
   })
